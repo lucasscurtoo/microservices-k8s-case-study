@@ -1,15 +1,24 @@
 # url-shortener
 
-Monorepo de aprendizaje: acortador de URLs con 3 microservicios NestJS independientes (cada uno con su propio `package.json`).
+Monorepo de aprendizaje (npm workspaces): acortador de URLs con 3 microservicios NestJS independientes. Cada servicio tiene su propio `package.json`; las dependencias se instalan una sola vez en la raíz.
 
 ## Estructura
 
 ```
 url-shortener/
+├── package.json         # workspaces
+├── node_modules/        # compartido
 ├── write-service/       # NestJS app
 ├── read-service/        # NestJS app
 ├── analytics-service/   # NestJS app
 └── README.md
+```
+
+## Uso
+
+```bash
+npm install                          # desde la raíz, instala todo
+npm run start:dev -w write-service   # levantar un servicio
 ```
 
 ## Servicios

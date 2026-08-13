@@ -1,0 +1,9 @@
+{
+  "name": "url-shortener",
+  "private": true,
+  "workspaces": [
+    "write-service",
+    "read-service",
+    "analytics-service"
+  ]
+}
