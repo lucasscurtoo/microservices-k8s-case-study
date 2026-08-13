@@ -1,0 +1,4 @@
+packages:
+  - write-service
+  - read-service
+  - analytics-service
