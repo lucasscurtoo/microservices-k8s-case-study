@@ -1,0 +1,83 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: shortener
+    ports:
+      # 15432 en el host: 5432 lo ocupa el Postgres local y 5433 un tunel SSH.
+      - '15432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U admin']
+      interval: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    # AOF en vez de los snapshots RDB por defecto: el contador de short_codes
+    # no puede perder incrementos, y RDB solo guarda cada 60s/300s/3600s.
+    command: ['redis-server', '--appendonly', 'yes']
+    ports:
+      - '6379:6379'
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      retries: 5
+
+  # nats:
+  #   image: nats:2-alpine
+  #   ports:
+  #     - '4222:4222'
+  #     - '8222:8222'
+
+  write-service:
+    # Tag explicito, nunca :latest. Con un tag versionado, k8s usa
+    # imagePullPolicy IfNotPresent por defecto y toma la imagen local.
+    image: write-service:0.1.0
+    build:
+      # El contexto es la raiz del workspace porque el servicio depende
+      # de packages/db-schemas, que vive fuera de su carpeta.
+      context: .
+      dockerfile: write-service/Dockerfile
+    ports:
+      - '3001:3001'
+    environment:
+      PORT: 3001
+      # Dominio publico donde resuelve el read-service, visto desde el navegador.
+      BASE_URL: http://localhost:3000
+      # Nombres de servicio y puertos internos, no localhost ni el 15432 del host.
+      DATABASE_URL: postgresql://admin:admin@postgres:5432/shortener
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  read-service:
+    image: read-service:0.1.0
+    build:
+      context: .
+      dockerfile: read-service/Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://admin:admin@postgres:5432/shortener
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  redisdata:

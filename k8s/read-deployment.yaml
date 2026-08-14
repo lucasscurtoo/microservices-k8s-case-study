@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: read-service-deployment
+  labels:
+    app: read-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: read-service
+  template:
+    metadata:
+      labels:
+        app: read-service
+    spec:
+      containers:
+        - name: read-service
+          image: read-service:0.1.0
+          env:
+            - name: PORT
+              value: '3000'
+            - name: DATABASE_URL
+              value: 'postgresql://admin:admin@host.docker.internal:15432/shortener'
+            - name: REDIS_PORT
+              value: '6379'
+            - name: REDIS_HOST
+              value: 'host.docker.internal'
+          ports:
+            - containerPort: 3000

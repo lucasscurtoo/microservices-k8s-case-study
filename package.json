@@ -2,6 +2,7 @@
   "name": "url-shortener",
   "private": true,
   "scripts": {
-    "dev": "pnpm -r --parallel start:dev"
+    "dev": "pnpm -r --parallel start:dev",
+    "images": "docker compose build"
   }
 }

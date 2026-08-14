@@ -1,0 +1,17 @@
+{
+  "name": "@url-shortener/db-schemas",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start:dev": "tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

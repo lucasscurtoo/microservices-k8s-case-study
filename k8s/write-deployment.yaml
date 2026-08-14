@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: write-service-deployment
+  labels:
+    app: write-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: write-service
+  template:
+    metadata:
+      labels:
+        app: write-service
+    spec:
+      containers:
+        - name: write-service
+          image: write-service:0.1.0
+          env:
+            - name: PORT
+              value: '3001'
+            - name: BASE_URL
+              value: 'http://localhost:3001'
+            - name: DATABASE_URL
+              value: 'postgresql://admin:admin@host.docker.internal:15432/shortener'
+            - name: REDIS_PORT
+              value: '6379'
+            - name: REDIS_HOST
+              value: 'host.docker.internal'
+          ports:
+            - containerPort: 3001
