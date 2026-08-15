@@ -17,14 +17,13 @@ spec:
       containers:
         - name: read-service
           image: read-service:0.1.0
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: secrets
           env:
             - name: PORT
               value: '3000'
-            - name: DATABASE_URL
-              value: 'postgresql://admin:admin@postgres:5432/shortener'
-            - name: REDIS_PORT
-              value: '6379'
-            - name: REDIS_HOST
-              value: 'redis'
           ports:
             - containerPort: 3000
