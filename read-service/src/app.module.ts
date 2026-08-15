@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import Redis from 'ioredis';
 import { envs } from './envs';
 import { DB, dbProvider, type Database } from './db/db.provider';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 const redisProvider = {
   provide: 'REDIS',
@@ -16,7 +17,17 @@ const redisProvider = {
 };
 
 @Module({
-  imports: [],
+  imports: [
+    ClientsModule.register([
+      {
+        name: 'NATS_SERVER',
+        transport: Transport.NATS,
+        options: {
+          servers: [envs.BROKER_URL],
+        },
+      },
+    ]),
+  ],
   controllers: [AppController],
   providers: [AppService, redisProvider, dbProvider],
 })

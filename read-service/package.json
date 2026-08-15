@@ -28,6 +28,7 @@
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "ioredis": "^6.0.0",
+    "nats": "^2.29.3",
     "pg": "^8.23.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"

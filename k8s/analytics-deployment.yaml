@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-service-deployment
+  labels:
+    app: analytics-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics-service
+  template:
+    metadata:
+      labels:
+        app: analytics-service
+    spec:
+      containers:
+        - name: analytics-service
+          image: analytics-service:0.1.0
+          envFrom:
+            - configMapRef:
+                name: analytics-app-config
+            - secretRef:
+                name: analytics-secrets

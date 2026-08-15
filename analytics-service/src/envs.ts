@@ -10,9 +10,6 @@ function getEnvVariable(key: string): string {
 }
 
 export const envs = {
-  PORT: getEnvVariable('PORT'),
-  REDIS_HOST: getEnvVariable('REDIS_HOST'),
-  REDIS_PORT: getEnvVariable('REDIS_PORT'),
   DATABASE_URL: getEnvVariable('DATABASE_URL'),
   BROKER_URL: getEnvVariable('BROKER_URL'),
 };

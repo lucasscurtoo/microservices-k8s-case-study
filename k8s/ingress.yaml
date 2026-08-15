@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shortener
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: shortener.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: read-service
+                port:
+                  number: 3000
+    - host: api.shortener.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: write-service
+                port:
+                  number: 3001

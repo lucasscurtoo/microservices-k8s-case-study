@@ -1,0 +1,59 @@
+{
+  "id": "c505ed86-dbf5-4f08-9b20-b310c1516335",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.visited": {
+      "name": "visited",
+      "schema": "",
+      "columns": {
+        "short_code": {
+          "name": "short_code",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "visited_times": {
+          "name": "visited_times",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "first_visited_at": {
+          "name": "first_visited_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "last_visited_at": {
+          "name": "last_visited_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

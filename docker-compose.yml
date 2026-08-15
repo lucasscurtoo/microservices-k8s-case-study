@@ -61,7 +61,7 @@ services:
         condition: service_healthy
 
   read-service:
-    image: read-service:0.1.0
+    image: read-service:0.2.0
     build:
       context: .
       dockerfile: read-service/Dockerfile
