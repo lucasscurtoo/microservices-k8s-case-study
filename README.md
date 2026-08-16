@@ -54,8 +54,8 @@ flowchart TB
             natsPod["pod nats:2-alpine"]
         end
 
-        subgraph analyticsDeploy["Deployment analytics-service · 1 replica<br/>sin Service · sin Ingress"]
-            analyticsPod["pod · microservicio NATS puro"]
+        subgraph analyticsDeploy["Deployment analytics-service · 1 replica"]
+            analyticsPod["pod · microservicio NATS puro<br/>sin Service · sin Ingress"]
         end
 
         redisSvc[["Service headless redis :6379"]]
